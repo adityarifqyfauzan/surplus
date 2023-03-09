@@ -33,10 +33,7 @@ class CategoryService extends Service implements CategoryRepository
 
         $category = $category->first();
 
-        if ($category) {
-            return $this->return(true, $category);
-        }
-        return $this->return(false);
+        return $category;
     }
 
     public function create(Category $category): object {

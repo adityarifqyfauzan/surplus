@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Category extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
     protected $hidden = ['pivot'];
+
+    protected $casts = [
+        'enable' => 'boolean'
+    ];
 
     /**
      * Prepare a date for array / JSON serialization.
@@ -26,17 +30,14 @@ class Category extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    protected $casts = [
-        'enable' => 'boolean'
-    ];
-
     /**
-     * Get all of the product_categories for the Category
+     * The categories that belong to the Product
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function product_categories(): HasMany
+    public function categories(): BelongsToMany
     {
-        return $this->hasMany(ProductCategory::class, 'category_id', 'id');
+        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id')->withTimestamps();
     }
+
 }

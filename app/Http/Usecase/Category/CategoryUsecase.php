@@ -53,11 +53,11 @@ class CategoryUsecase extends Usecase implements CategoryUsecaseInterface
 
     public function getOneBy($id){
         $result = $this->category_service->findOneBy(["id" => $id]);
-        if ($result->data) {
+        if ($result) {
             return $this->returnUsecase(
                 Response::HTTP_OK,
                 "Kategori Ditemukan!",
-                $result->data
+                $result
             );
         }
 
@@ -70,7 +70,7 @@ class CategoryUsecase extends Usecase implements CategoryUsecaseInterface
     public function store(StoreCategoryRequest $request){
 
         $category = $this->category_service->findOneBy(["name" => $request->name]);
-        if ($category->data) {
+        if ($category) {
             return $this->returnUsecase(
                 Response::HTTP_UNPROCESSABLE_ENTITY,
                 "Kategori ". $request->name ." sudah ada!"
@@ -97,7 +97,7 @@ class CategoryUsecase extends Usecase implements CategoryUsecaseInterface
 
         // get category
         $category = $this->category_service->findOneBy(["id" => $id]);
-        if (!$category->data) {
+        if (!$category) {
             return $this->returnUsecase(
                 Response::HTTP_NOT_FOUND,
                 "Kategori Tidak Ditemukan!"
@@ -106,17 +106,17 @@ class CategoryUsecase extends Usecase implements CategoryUsecaseInterface
 
         // check if new category is not exist
         $check = $this->category_service->findOneBy(["name" => $request->name]);
-        if ($check->data && $check->data->id != $id) {
+        if ($check && $check->id != $id) {
             return $this->returnUsecase(
                 Response::HTTP_UNPROCESSABLE_ENTITY,
                 "Kategori ". $request->name ." sudah ada!"
             );
         }
 
-        $category->data->name = $request->name;
-        $category->data->enable = $request->enable;
+        $category->name = $request->name;
+        $category->enable = $request->enable;
 
-        $category = $this->category_service->update($category->data);
+        $category = $this->category_service->update($category);
         if (!$category->process) {
             return $this->returnUsecase(
                 Response::HTTP_UNPROCESSABLE_ENTITY,

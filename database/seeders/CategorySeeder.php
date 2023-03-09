@@ -20,6 +20,9 @@ class CategorySeeder extends Seeder
             [
                 "name" => "Minuman"
             ],
+            [
+                "name" => "Pedas"
+            ],
         ];
 
         foreach ($data as $value) {
