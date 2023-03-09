@@ -11,9 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait ResponseFormatter
 {
     /**
-     * Http success response
-     * this function used when you want to create success
-     * response
+     * Http response
      *
      * @param string $message
      * @param mixed $data
@@ -22,7 +20,7 @@ trait ResponseFormatter
      *
      * @return json
      */
-    public function success($message, $data = null, $code = Response::HTTP_OK, $paginate = [])
+    public function response($message, $data = null, $code = Response::HTTP_OK, $paginate = [])
     {
 
         if ($paginate) {
@@ -38,20 +36,6 @@ trait ResponseFormatter
             "data" => $data
         ], $code);
 
-    }
-
-    /**
-     * Http failed response
-     *
-     * @param string $message
-     * @param int $code
-     * @return json
-     */
-    public function failed($message, $code = Response::HTTP_INTERNAL_SERVER_ERROR)
-    {
-        return response()->json([
-            "message" => $message
-        ], $code);
     }
 
     /**
@@ -80,12 +64,19 @@ trait ResponseFormatter
     public function error($message)
     {
 
-        Log::critical($message . ' ' . now());
-
         if (App::environment(['staging', 'local'])) {
             return $message;
         }
 
         return 'Terjadi kesalahan pada server, silahkan hubungi administrator';
+    }
+
+    public function internalServerError($e)
+    {
+        return $this->response(
+            $e,
+            null,
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 }
