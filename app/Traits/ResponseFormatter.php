@@ -61,7 +61,7 @@ trait ResponseFormatter
      * @param string $message
      * @return string
      */
-    public function error($message)
+    private function error($message)
     {
 
         if (App::environment(['staging', 'local'])) {
@@ -74,7 +74,7 @@ trait ResponseFormatter
     public function internalServerError($e)
     {
         return $this->response(
-            $e,
+            $this->error($e),
             null,
             Response::HTTP_INTERNAL_SERVER_ERROR
         );

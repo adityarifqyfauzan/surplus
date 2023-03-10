@@ -11,7 +11,7 @@ class ProductService extends Service implements ProductRepository
 {
     public function findBy($criteria = [], $page, $size) {
         $offset = Pagination::getOffset($page, $size);
-        $products = Product::with('categories:id,name')->where(Arr::except($criteria, ['name', 'category_id']));
+        $products = Product::with('categories:id,name', 'images:id,name,file')->where(Arr::except($criteria, ['name', 'category_id']));
 
         if (Arr::exists($criteria, 'name')) {
             $products = $products->where('name', 'like', '%'. $criteria['name'] . '%');
@@ -30,7 +30,7 @@ class ProductService extends Service implements ProductRepository
     }
 
     public function findOneBy($criteria = []) {
-        $product = Product::with('categories:id,name')->where(Arr::except($criteria, ['category_id']));
+        $product = Product::with('categories:id,name', 'images:id,name,file')->where(Arr::except($criteria, ['category_id']));
 
         if (Arr::exists($criteria, 'category_id')) {
             $product = $product->whereHas('categories', function ($q) use ($criteria)

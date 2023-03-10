@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('category', CategoryController::class);
 Route::resource('product', ProductController::class);
+Route::put('/product/image/delete', [ImageController::class, 'destroy']);
+Route::post('/product/image', [ImageController::class, 'store']);

@@ -40,4 +40,14 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id')->withTimestamps();
     }
 
+    /**
+     * The images that belong to the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function images(): BelongsToMany
+    {
+        return $this->belongsToMany(Image::class, 'product_images', 'product_id', 'image_id')->withTimestamps();
+    }
+
 }
