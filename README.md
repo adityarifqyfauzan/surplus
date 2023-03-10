@@ -7,11 +7,93 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## How to run the project?
+# Laravel Project Setup Guide
 
 
+## **Cloning The Project**
+1. Open your terminal or **command prompt** and navigate to the directory where you want to store your project.
+2. Clone the project using the git clone command followed by the project's Git URL. For example:
 
-## About Laravel
+```
+git clone https://github.com/adityarifqyfauzan/surplus.git
+```
+
+3. Once the project is cloned, navigate to the project directory:
+
+```
+cd surplus
+```
+
+## **Installing Dependencies**
+
+1. Make sure you have `Composer` installed on your system.
+2. Run the following command to install the project dependencies:
+
+```
+composer install
+```
+
+## **Setting Up The Environment**
+
+
+1. Copy the `.env.example` file to a new file called `.env`:
+
+```
+cp .env.example .env
+```
+
+2. Generate a new application key:
+
+```
+php artisan key:generate
+```
+
+3. Set up your database configuration in the `.env` file:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your-database-name
+DB_USERNAME=your-database-username
+DB_PASSWORD=your-database-password
+```
+
+4. Run the database migrations:
+
+```
+php artisan migrate
+```
+
+5. Run the database seeder:
+
+```
+php artisan db:seed
+```
+
+6. Create Symbolic Link for public storage:
+
+```
+php artisan storage:link
+```
+
+## **Running the Project**
+
+1. Start the Laravel development server:
+
+```
+php artisan serve
+```
+
+2. Open your web browser and go to http://localhost:8000 to see your project.
+
+## **Postman Collection**
+- You can test the API using postman, I attached a collection link below:
+
+```
+https://api.postman.com/collections/23004903-071646e1-032b-45b8-b21d-56591bf3a915?access_key=PMAT-01GV6K010FTFJTNT3KRMGE426T
+```
+# About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
